@@ -1,0 +1,60 @@
+---
+title: "In-class Exercise 1 "
+description: |
+  A new article created using the Distill format.
+author:
+  - name: Fei Jiahui 
+    url: https://www.linkedin.com/in/jiahui-fei-169841109/
+    affiliation: SMU MITB
+    affiliation_url: https://scis.smu.edu.sg/master-it-business/financial-technology-and-analytics-track/curriculum
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.retina = 3,
+                      cache = FALSE,
+                      echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE,
+                      eval = TRUE)
+```
+
+# Installing and loading required packages
+
+```{r}
+packages = c('tidyverse', 'ggrepel')
+for(p in packages){if(!require(p, character.only = T)){install.packages(p)}
+library(p, character.only = T)}
+```
+
+# Import data into R
+
+```{r}
+exam_data <- read_csv("data/Exam_data.csv")
+```
+
+# My first data visualisation created using ggplot2
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(
+    bins = 20,
+    color = "black",
+    fill = "light blue")
+```
+
+## 
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS, fill = GENDER)) +
+  geom_histogram(
+    bins = 20,
+    color = "grey30")
+```
+
+
+
+
