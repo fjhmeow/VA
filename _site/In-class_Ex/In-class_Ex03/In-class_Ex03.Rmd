@@ -1,0 +1,199 @@
+---
+title: "In-class Exercise 3"
+description: |
+  A new article created using the Distill format.
+author:
+  - name: Fei Jiahui 
+    url: https://example.com/norajones
+    affiliation: SMU MITB
+    affiliation_url: https://example.com/spacelysprokets
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Write a code chunk to check, install and launch the following R packages:
+
+```{r}
+packages = c('ggiraph','plotly', 'DT',
+             'patchwork', 'gganimate', 
+             'tidyverse', 'readxl', 'gifski',
+             'gapminder')
+for (p in packages) {
+  if (!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p, character.only = T)
+}
+```
+Using read_csv() of readr package, import Exam_data.csv into R.
+
+```{r}
+exam_data <- read_csv("data/Exam_data.csv")
+```
+
+```{r}
+p <- ggplot(data=exam_data,    #output as object p
+            aes(x = MATHS)) +
+geom_dotplot_interactive(
+  aes(tooltip = ID),       #show ID when hover over
+  stackgroups = TRUE,
+  binwidth = 1,
+  method = "histodot") +
+scale_y_continuous(NULL,
+                   breaks = NULL)
+girafe(          #use girafe to make it interactive
+  ggobj = p,
+  width_svg = 6,
+  height_svg = 6*0.618
+)
+```
+
+
+
+
+
+```{r}
+p <- ggplot(data=exam_data,
+            aes(x = MATHS)) +
+  geom_dotplot_interactive(
+    aes(data_id = CLASS,   #highlight the students in same class when hover over the dot
+        tooltip = ID),
+    stackgroups = TRUE,
+    binwidth = 1,
+    method = "histodot") +
+  scale_y_continuous(NULL,
+                     breaks = NULL)
+girafe(
+  ggobj = p,
+  width_svg = 6,
+  height_svg = 6*0.618,
+  options = list(
+    opts_hover(css = "fill: #202020;"),
+    opts_hover_inv(css = "opacity:0.2;")
+    )
+)
+```
+
+
+```{r}
+p1 <- ggplot(data=exam_data,
+             aes(x = MATHS)) +
+  geom_dotplot_interactive(
+    aes(data_id = ID,
+        tooltip = ID),
+    stackgroups = TRUE,
+    binwidth = 1,
+    method = "histodot") +
+  coord_cartesian(xlim=c(0,100)) +
+  scale_y_continuous(NULL,
+                     breaks = NULL)
+
+p2 <- ggplot(data=exam_data,
+             aes(x = ENGLISH)) +
+  geom_dotplot_interactive(
+    aes(data_id = ID,
+        tooltip = ID),
+    stackgroups = TRUE,
+    binwidth = 1,
+    method = "histodot") +
+  coord_cartesian(xlim=c(0,100)) +
+  scale_y_continuous(NULL,
+                     breaks = NULL)
+
+girafe(code = print(p1 / p2), #patchwork function
+       width_svg = 6,
+       height_svg = 6,
+       options = list(
+         opts_hover(css = "fill: #202020;"),
+         opts_hover_inv(css = "opacity:0.2;")
+         )
+       )
+
+```
+
+
+```{r}
+pal <- c("red", "purple", "blue", "green")
+plot_ly(data = exam_data,
+        x = ~MATHS,
+        y = ~ENGLISH,
+        text = ~paste("Student ID:",
+                      ID,"<br>Class:", CLASS),  #br means to break line
+        color = ~RACE,
+        colors = pal)
+```
+
+
+```{r}
+plot_ly(data = exam_data,
+        x = ~ENGLISH,
+        y = ~MATHS,
+        text = ~paste("Student ID:", ID,
+                      "<br>Class:", CLASS),
+        color = ~RACE,
+        colors = "Set1") %>%
+layout(title = 'English Score versus Maths Score',
+       xaxis = list(range = c(0, 100, 20)),
+       yaxis = list(range = c(0, 100, 20)))
+```
+
+
+```{r}
+d <- highlight_key(exam_data)
+p1 <- ggplot(data=d,
+             aes(x = MATHS,
+                 y = ENGLISH)) +
+  geom_point(size=1) +
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100))
+p2 <- ggplot(data=d,
+             aes(x = MATHS,
+                 y = SCIENCE)) +
+  geom_point(size=1) +
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100))
+subplot(ggplotly(p1),
+        ggplotly(p2))
+```
+
+
+```{r}
+p1 <- ggplot(data=exam_data,
+             aes(x = MATHS,
+                 y = ENGLISH)) +
+  geom_point(size=1) +
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100))
+p2 <- ggplot(data=exam_data,
+             aes(x = MATHS,
+                 y = SCIENCE)) +
+  geom_point(size=1) +
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100))
+subplot(ggplotly(p1),
+        ggplotly(p2))
+```
+
+
+```{r}
+DT::datatable(exam_data)
+```
+
+```{r}
+d <- highlight_key(exam_data)
+p <- ggplot(d,
+            aes(ENGLISH,
+                MATHS)) +
+  geom_point(size=1) +
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100))
+gg <- highlight(ggplotly(p),
+                "plotly_selected")
+crosstalk::bscols(gg,
+                  DT::datatable(d),
+                  widths = 5)
+```

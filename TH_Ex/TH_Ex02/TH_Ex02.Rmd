@@ -1,0 +1,125 @@
+---
+title: "Take-home Exercise 2"
+description: |
+  Creating data visualisation beyond default.
+author:
+  - name: Fei Jiahui 
+    url: https://www.linkedin.com/in/jiahui-fei-169841109/
+    affiliation: SMU MITB
+    affiliation_url: https://scis.smu.edu.sg/
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# The Task
+In this take-home exercise, I will apply appropriate interactivity and animation methods learnt in last week's lesson to design an age-sex pyramid based data visualization to show the changes of demographic structure of Singapore by age cohort and gender between 2000-2020 at planning area level.
+
+For this task, the data sets entitle Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2000-2010 and Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2011-2020 should be used. These data sets are available at [Department of Statistics](https://www.singstat.gov.sg/) home page.
+
+## Installing and loading the required packages
+The code chunk below is to check, install and launch the following R packages:
+
+```{r}
+packages = c('ggiraph','plotly', 'DT',
+             'patchwork', 'gganimate', 
+             'tidyverse', 'readxl', 'gifski',
+             'gapminder')
+for (p in packages) {
+  if (!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p, character.only = T)
+}
+```
+
+
+## Data Import
+The code chunk below imports the required csv files into R environment by using [read_csv()](https://readr.tidyverse.org/reference/read_delim.html) function of **readr** package. *rbind* is used to combine the two data frames into one by combining the rows.
+
+```{r}
+pop_data1 <- read_csv("Data/respopagesextod2000to2010.csv")
+pop_data2 <- read_csv("Data/respopagesextod2011to2020.csv")
+pop_data <- rbind(pop_data1,pop_data2)
+```
+
+
+## Compute population by sex, age and year
+In the code chunk below, group_by() of dplyr package is used to group the population by gender and age group. Then, summarise() of dplyr is used to count (i.e. n()) the size of population in each group. Furthermore, '0' is added in front of the age groups '0 to 4' and '5 to 9' so as to ensure the data will be sorted in correct order.
+
+```{r}
+pop_group <- pop_data %>%
+  group_by(`AG`, `Sex`, `Time`) %>%
+  summarise('Population' = sum(`Pop`)) %>%
+  ungroup()
+
+pop_group$AG[pop_group$AG=="5_to_9"] <- "05_to_09"
+pop_group$AG[pop_group$AG=="0_to_4"] <- "00_to_04"
+```
+
+## Plotting animated population pyramid using gganimate
+In the code chunk below, geom_col() is used to plot a bar chart by using population as the x-axis and age as the y-axis. An *ifelse* argument is inserted to make the male population inversed so as to create the pyramid shape. Transition_time is set using the the various years in the data frame to enable the animation.
+
+```{r}
+ggplot(data=pop_group, 
+       aes(x = ifelse(test = Sex == 'Males', 
+                      yes = -Population/1000, 
+                      no = Population/1000),
+                           y = AG, fill = Sex))+
+  geom_col()+
+  scale_x_continuous(breaks=seq(-160,160,20),labels = abs(seq(-160,160,20)))+
+  labs(title = 'Year: {frame_time}',
+       x = "Population Size in thousands",
+       y = "Age Group")+
+  transition_time(as.integer(Time))+
+  ease_aes('linear')
+
+```
+
+
+## Plotting interactive population pyramid using plotly
+In the code chunk below, group_by() of dplyr package is used to group the population by gender, age group, planning area and year. Then, summarise() of dplyr is used to count (i.e. n()) the size of population in each group. Furthermore, '0' is added in front of the age groups '0 to 4' and '5 to 9' so as to ensure the data will be sorted in correct order.
+
+```{r}
+pop_group2 <- pop_data %>%
+  group_by(`PA`, `AG`, `Sex`, `Time`) %>%
+  summarise('Population' = sum(`Pop`)) %>%
+  ungroup()
+
+pop_group2$AG[pop_group2$AG=="5_to_9"] <- "05_to_09"
+pop_group2$AG[pop_group2$AG=="0_to_4"] <- "00_to_04"
+```
+
+
+In the code chunk below, we first filter out the respective male and female population by using the *filter* function. Afterwards, *plot_ly* is used to draw out the graph by defining population size as the x-axis, age group as y-axis, planning area as colour and time as the animation frame. We then reverse the x-axis for male population by typing the code *autorange="reversed"*. Last but not least, we combine the male and female population by using *subplot*, and the population pyramid is formed.
+
+```{r}
+pop_male <- pop_group2 %>%
+  filter(Sex == "Males")
+ggmale <- plot_ly(data = pop_male,
+        x = ~Population,
+        y = ~AG,
+        frame = ~Time,
+        color = ~PA) %>%
+  layout(xaxis = list(title = 'Male Population Size', autorange="reversed"),
+         yaxis = list(title = 'Age Group'))
+
+pop_female <- pop_group2 %>%
+  filter(Sex == "Females")
+ggfemale <- plot_ly(data = pop_female,
+        x = ~Population,
+        y = ~AG,
+        frame = ~Time,
+        color = ~PA) %>%
+  layout(xaxis = list(title = 'Female Population Size'),
+         yaxis = list(title = 'Age Group'))
+
+subplot(ggmale, ggfemale,shareX = TRUE, shareY = TRUE)
+
+```
+
+
+
