@@ -44,7 +44,31 @@ The original visualisation is shown below:
 
 The proposed alternative design is shown below:
 
+![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\alternative design.jpg)
+
+### 2.1 Clarity
+1. The chart title will be comprehensive and include all important information of the visualisation. For example, "Singapore resident labour force participation rate (LFPR) by gender and age group from 2010 to 2021" will be used to allow users to understand the context and time period of the graph.
+
+2. Horizontal axis will be sorted in ascending order for the age groups from "15 to 19" to "75 and over" to allow more meaningful comparison across age groups. In addition, overlapping age groups such as "70 and over" will be removed.
+
+3. To allow more insightful analysis, males and females will be separated using different colours to allow users to spot different trends in LFPR for different genders across the years. If we aggregate the data and do not separate by genders, important trend could be missed as the male and female LFPR may demonstrate different trends over the years.
+
+4. To allow comparison between different genders in a given year, a second chart will be created using side by side bars to visualise average LFPR across all age groups in a given year for males and femalels respectively. This additional graph will ensure a more holistic analysis across the given time frame.
+
+### 2.2 Aesthetics
+1. Only two colours will be used to represent males and females data respectively. The removal of redundant colours will allow viewers to focus on trend analysis while avoid being disturbed by the confusing colour shadings.
+
+2. The words "Males" and "females" in the chart titles will be shaded using the respective legend colour to ensure consistency.
+
+3. Labels and column widths will be adjusted accordingly to ensure no words are blocked.
 
 
+# 3 Proposed Visualisation
 
+Please refer to the graph below for poposed visualisation. You can also find it on [Tableau Public](https://public.tableau.com/app/profile/fei.jiahui/viz/DataVizMakeover1_16441735384140/Dashboard1).
+
+![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\tableau final.png)
+
+
+# 4 Step By Step Guide
 
