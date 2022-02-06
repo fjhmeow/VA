@@ -1,0 +1,216 @@
+---
+title: "In-class Exercise 4"
+description: |
+  A new article created using the Distill format.
+author:
+  - name: FEI JIAHUI 
+    url: https://example.com/norajones
+    affiliation: SMU MITB
+    affiliation_url: https://example.com/spacelysprokets
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# load required packages
+
+```{r}
+packages = c('ggstatsplot', 'ggside', 
+             'tidyverse', 'ggdist','PMCMRplus')
+for (p in packages){
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+}
+```
+# data import
+
+```{r}
+exam <- read_csv("data/Exam_data.csv")
+```
+
+# One-sample test: gghistostats() method
+In the code chunk below, gghistostats() is used to build an visual of one-sample test on English scores.
+
+```{r}
+set.seed(1234)
+gghistostats(
+  data = exam,
+  x = ENGLISH,
+  type = "p",
+  test.value = 60,
+  xlab = "English scores"
+)
+```
+
+# Two-sample mean test: ggbetweenstats()
+In the code chunk below, ggbetweenstats() is used to build a visual for two-sample mean test of Maths scores by gender.
+
+```{r}
+ggbetweenstats(
+  data = exam,
+  x = GENDER, 
+  y = MATHS,
+  type = "p",
+  messages = FALSE
+)
+```
+
+# Oneway ANOVA Test: ggbetweenstats() method
+In the code chunk below, ggbetweenstats() is used to build a visual for One-way ANOVA test on English score by race.
+
+```{r}
+ggbetweenstats(
+  data = exam,
+  x = RACE, 
+  y = ENGLISH,
+  type = "p",
+  mean.ci = TRUE, 
+  pairwise.comparisons = TRUE, 
+  pairwise.display = "s",
+  p.adjust.method = "fdr",
+  messages = FALSE
+)
+```
+
+
+# Significant Test of Correlation: ggscatterstats()
+In the code chunk below, ggscatterstats() is used to build a visual for Significant Test of Correlation between Maths scores and English scores.
+
+```{r}
+ggscatterstats(
+  data = exam,
+  x = MATHS,
+  y = ENGLISH,
+  marginal = FALSE,
+  )
+```
+
+
+# Significant Test of Association (Depedence) : ggbarstats() methods
+In the code chunk below, the Maths scores is binned into a 4-class variable by using cut().
+
+```{r}
+exam1 <- exam %>% 
+  mutate(MATHS_bins = 
+           cut(MATHS, 
+               breaks = c(0,60,75,85,100))
+)
+```
+
+
+In this code chunk below ggbarstats() is used to build a visual for Significant Test of Association
+
+```{r}
+ggbarstats(exam1, 
+           x = MATHS_bins, 
+           y = GENDER)
+```
+
+
+# Toyota
+# Installing and loading the required libraries
+
+```{r}
+packages = c('readxl', 'report', 'performance', 
+             'parameters', 'see')
+for(p in packages){
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p, character.only = T)
+}
+```
+
+
+# Importing Excel file: readxl methods
+In the code chunk below, read_xls() of readxl package is used to import the data worksheet of ToyotaCorolla.xls workbook into R.
+
+```{r}
+car_resale <- read_xls("data/ToyotaCorolla.xls", 
+                       "data")
+```
+
+
+# Multiple Regression Model using lm()
+The code chunk below is used to calibrate a multiple linear regression model by using lm() of Base Stats of R.
+
+```{r}
+model <- lm(Price ~ Age_08_04 + Mfg_Year + KM + 
+              Weight + Guarantee_Period, data = car_resale)
+model
+```
+
+
+# Model Diagnostic: checking for multicolinearity:
+In the code chunk, check_collinearity() of performance package.
+
+```{r}
+check_collinearity(model)
+```
+
+
+```{r}
+check_c <- check_collinearity(model)
+plot(check_c)
+```
+
+
+# Model Diagnostic: checking normality assumption
+In the code chunk, check_normality() of performance package.
+
+```{r}
+check_n <- check_normality(model)
+plot(check_n)
+```
+
+
+# Model Diagnostic: Check model for homogeneity of variances
+In the code chunk, check_heteroscedasticity() of performance package.
+
+```{r}
+check_h <- check_heteroscedasticity(model)
+plot(check_h)
+```
+
+
+# Model Diagnostic: Complete check
+We can also perform the complete by using check_model().
+
+```{r}
+check_model(model)
+```
+
+
+# Visualising Regression Parameters: see methods
+In the code below, plot() of see package and parameters() of parameters package is used to visualise the parameters of a regression model.
+
+```{r}
+plot(parameters(model))
+```
+
+
+# Visualising Regression Parameters: ggcoefstats() methods
+In the code below, ggcoefstats() of ggstatsplot package to visualise the parameters of a regression model.
+
+```{r}
+ggcoefstats(model, 
+            output = "plot")
+```
+
+
+# Visualising uncertainty between groups
+In the code chunk below, stat_eye() of ggdist is used to build a visual for displaying distribution of maths scores by rase.
+
+```{r}
+exam %>%
+  ggplot(aes(x = RACE, y = MATHS)) +
+  stat_eye() +
+  ggtitle("stat_eye()")
+```
+
+
+

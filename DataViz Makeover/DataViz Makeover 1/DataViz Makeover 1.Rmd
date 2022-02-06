@@ -1,0 +1,50 @@
+---
+title: "DataViz Makeover 1"
+description: |
+  DataViz Makeover 1 for ISSS608: Visual Analytics and Applications
+author:
+  - name: Fei Jiahui 
+    url: https://www.linkedin.com/in/jiahui-fei-169841109/
+    affiliation: SMU MITB
+    affiliation_url: https://scis.smu.edu.sg/master-it-business
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# 1 Critique of Original Visualisation
+
+The original visualisation is shown below:
+
+![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\original graph.png)
+
+### 1.1 Clarity
+1. The title of the original visualisation graph is incomplete. The tile "Labour force participation rate" does not describe even the basic features of the graph. For example, viewers will not be able to tell which country's labour force participation rate the graph is showing. A more accurate title should be "Singapore resident labour force participation rate by Age from 2010 to 2021"
+
+2. The bottom horizontal axis labels are confusing and inconsistent with the underlying data. For the labels at the bottom, it is showing only "year" and "2015", easily misleading viewers to think the graph is showing labour force participation rate in the year of 2015. However, the underlying data is on labour force participation rate from 2010 to 2021.
+
+3. The top horizontal axis on age-group is not sorted in correct order. For example, age groups "75 and over" and "70 and over" are placed before "15 to 19", while the age group "20 to 24" is placed between "55 to 59" and "50 to 54". It seems that the graph is sorted based on the value of labour force participation rate, however, such sorting really creates a lot of difficulties for viewers to locate the age groups they would like to look at.
+
+4. There are overlapping age groups that further undermines the clarity of the graph. For instance, three age groups, namely "70 and over", "70 to 74" and "75 and over" clearly overlap with each other, it will create difficulties for potential users of the graph to compare across age groups. It is important to remove the age group "70 and over" to ensure there is no overlapping among all different age groups.
+
+5. The vertical axis label is using a short form "lfpr" which is not defined earlier, undermining its clarity. It is important to define the short form in the chart title, for example "labour force participation rate (lfpr)", before using the short form directly in the vertical axis label so that users not familiar with the context can understand what lfpr means.
+
+### 1.2 Aesthetics
+1. The use of different colours to differentiate different age groups is redundant. In fact, the same colour should be used for all age groups since the graph has already divided up the various age groups in the horizontal axis. The use of so many different colours will cause users to lose focus and does not serve any meaningful purpose.
+
+2. Column width is not adjust correctly. For age groups "75 and over" and "70 and over", the labels are not shown fully since the column width is too narrow. 
+
+3. Since the graph is trying to show the labour force participation rate across the years from 2010 to 2021, it is important to highlight the trend across the years. Using shading to make the graph look like a bar chart will undermine its ability to show tread across the years. Hence it is better to use a simple line graph to highlight how labour force participation rate evolves across the years in different age groups.
+
+
+# 2 Alternative Design
+
+The proposed alternative design is shown below:
+
+
+
+
+
