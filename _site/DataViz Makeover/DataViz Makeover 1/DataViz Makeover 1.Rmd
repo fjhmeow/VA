@@ -70,5 +70,71 @@ Please refer to the graph below for poposed visualisation. You can also find it 
 ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\tableau final.png)
 
 
+
 # 4 Step By Step Guide
+Step                     | Action
+------------------------ | ---------------------------------------------------
+1. Open the downloaded data source excel file, create a new worksheet. Create four columns, name them as "Gender", "Age group", "Year" and "LFPR".| ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\1.png)
+2. Under **gender** column, create 3 groups for "All", "males" and "females". Under **age group** column, copy the age groups from sheet "mrsd_Res_LFPR_2", Fill the **year** column with years ranging from 2010 to 2021. Lastly, copy the LFPR for the respective gender, age groups and year over from sheet "mrsd_Res_LFPR_2" to the **LFPR** column.| ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\2.1.png)      ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\2.2.png)
+3. Open tableau, drag the exel file to tableau, then drag the sheet we created "LFPR_byAge&Gender" to the data source page | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\3.png)
+4. Drag Age group and year to columns, Lfpr to rows and gender to colours | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\4.png)
+5. Next, we need to remove the age group "70 and above". To do this, we drag age group to Filters and deselect the box "70 and above", we also remove the age group for "total", which shows the average LFPR across all age groups. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\5.png)
+6. We need only male and female LFPR, hence we drag gender to filters and remove "total" which is showing average LFPR across all genders. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\6.png)
+7. We then change the colours for males and females by clicking colour, then click edit coulour, choose Tableau 20. We will choose pink for females and green for males. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\7.png)
+8. Next, we will remove the horizontal axis label for years at the bottom, since the time frame information will be described in the chart title and for this chart, the purpose is to show different LFPR trends across different age groups in the same time frame, it is not necessary to show the years repeatedly at the bottom. We click the year then untick show header. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\8.png)
+9. We will change the chart title as shown in the graph, change the clolours for males and females to that of the legend, bold the main chart title. |  ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\9.png)
+10. Edit vertical axis title by right click the axis, select edit axis, then change the axis title. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\10.png)
+11. Change font size of the axis labels by right clicking the label, select format, then change the font size to 6. Do the same for horizontal axis | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\11.png)
+12. Create a new worksheet for chart 2, drage gender and year to columns, Lfpr to rows and gender to colours. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\12.png)
+13. Drag age group to filters, select only total to show average LFPR across all age groups. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\13.png)
+14. Drag gender to filter, deselect "All" to show only Male and Female LFPR. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\14.png)
+15. To create the side-by-side by chart, we change the data type for year to string, then drag it in front of gender in columns. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\15.png)
+16. We have to go back to sheet 1 to change the data type for year from string to number. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\16.png)
+17. Next, we remove bottom horizontal axis label by deselecting show header for gender. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\17.png)
+18. We will add labels on top of each bar. Click Label then tick show mark labels. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\18.png)
+19. we will match mark colour with legend and resize the font of the mark labels, | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\19.png)
+20. Similar to chart 1, we will edit vertical axis title and reformat all the label fonts. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\20.png)
+21. We will then edit chart title for chart 2. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\21.png)
+22. Create a new dashboard, drag sheet1 and sheet2 over. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\22.png)
+23. Finally, drag a blank box to upper right corner to move down the legend box, also move the mouse cursor to chart boarder to adjust the width for chart 1 and 2. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\23.png)
+
+
+
+# 5 Observations and Insights
+
+### 5.1 Male and Female LFPRs diverges at around the age of 30
+From the chart below, we can see LFPR for males and females do not differ much before the age of 30. However, from the age of 30, males have significantly higher labour force participation rate.
+
+![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\5.1.png)
+One possible explanation for this observation is that women are more likely to leave the labour force after marriage than men do. 
+
+According to [Singapore Government](https://www.strategygroup.gov.sg/images/Press%20Release%20images/PDFs/marriage-and-parenthood-trends-in-singapore.pdf) statistics, median age at first marriage is at 30.1 for men and 27.8 for woman in 2011. The median age at first birth is 29.8 for Singaporean mothers. Also, according to [Ministry of Social and Family Development](https://www.msf.gov.sg/research-and-data/Research-and-Data-Series/Documents/Family%20and%20Work%20Report.pdf), among those who cited housework, childcare and caregiving to families or relatives as the main reason for not working, women formed the majority with 99.5%, 97.4% and 84.3% respectively.
+
+As a result, woman are more likely to drop out from the labour force after marriage and giving birth, and this explains why the male and female labour force participation rate start to diverge at the age of around 30.
+
+
+### 5.2 Female LFPR increased more significantly over the years
+Another trend is that female LFPR has increased more significantly over the year across most age groups. For example, the male LFPR line almost stays flat for age groups 30 to 59 from 2010 to 2021, while that for female LFPR show a steep upward trend in the same period from 2010 to 2021.
+
+![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\5.2.1.png)
+
+This can also be shown from the difference between average male and female LFPRs over the years. For example, in 2010, average male LFPR is 20 percentage points higher than that for females, while the gap has narrowed to 13 percentage points in 2021.
+
+![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\5.2.2.png)
+
+According to [Ministry of Manpower](https://stats.mom.gov.sg/Pages/a-gender-inclusive-workforce.aspx), more women are joining the workforce and subscribing to more financially independent lifestyles over the years. 
+
+In addition, the covid pandemic also helped women to participate in the workforce. From the chart above, we can see that average female LFPR has increased significantly from 61.2% to 64.2% between 2020 and 2021, this is contributed by more flexible woring arrangements brought by covid control measures. As more women can choose to work from home, they are more likely to be able to balance their work and family responsibilities. Hence, more women are encouraged to join or stay in the workforce and the female LFPR increased significantly.
+
+
+### 5.3 Elderly aged 55 and above has the most significant increase in LFPR
+From the chart below, we can see that elderly age groups (55 and above) see the most significant increase in LFPR over the years.
+
+![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\5.3.png)
+
+This observation is supported by data obtained from [Ministry of Manpower](https://stats.mom.gov.sg/Pages/Growing_Alongside_Our_Ageing_Workforce.aspx) which states that the share of labour force for those aged 55 and older has increased from 16.5% in 2010 to 25.7% in 2020.
+
+![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 1\data\5.3.2.png)
+
+Besides the general demographic changes which suggests that the Singaporean workforce is growing older over the years, the various government support measures and initiatives have contributed to the significantly higher elderly LFPR. For example, the government has rolled out initiatives such as the Special Employment Credit in 2011, WorkPro Age Management Grant in 2013 and Senior Worker Support Package in 2020 to help senior workers stay employed and participate in the labour force. This has contributed to a higher LFPR for those aged 55 and above.
 
