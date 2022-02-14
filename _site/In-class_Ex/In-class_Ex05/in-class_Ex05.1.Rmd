@@ -1,0 +1,204 @@
+---
+title: "In-class Exercise 5.1"
+description: |
+  Correlation Matrix
+author:
+  - name: Fei Jiahui 
+    url: https://example.com/norajones
+    affiliation: SMU MITB
+    affiliation_url: https://example.com/spacelysprokets
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Installing and loading required packages
+We will use the code chunk below to install and launch corrplot, ggpubr, plotly and tidyverse in RStudio.
+
+```{r}
+packages = c('corrplot', 'tidyverse', 'ggstatsplot', 'ggcorrplot')
+
+for(p in packages){library
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p, character.only = T)
+}
+```
+
+
+## Importing data
+First, let us import the data into R by using read_csv() of readr package.
+
+```{r}
+wine <- read_csv("data/wine_quality.csv")
+```
+
+
+## Building a basic correlation matrix
+```{r, fig.height=7, fig.width=7}
+pairs(wine[,1:11])
+```
+
+
+## Drawing the lower corner
+```{r, fig.height=7, fig.width=7}
+pairs(wine[,1:11], upper.panel = NULL)
+```
+
+
+## Drawing the upper corner
+```{r, fig.height=7, fig.width=7}
+pairs(wine[,1:11], lower.panel = NULL)
+```
+
+
+## Including with correlation coefficients
+```{r, fig.height=7, fig.width=7}
+panel.cor <- function(x, y, digits=2, prefix="", cex.cor, ...) {
+usr <- par("usr")
+on.exit(par(usr))
+par(usr = c(0, 1, 0, 1))
+r <- abs(cor(x, y, use="complete.obs"))
+txt <- format(c(r, 0.123456789), digits=digits)[1]
+txt <- paste(prefix, txt, sep="")
+if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+text(0.5, 0.5, txt, cex = cex.cor * (1 + r) / 2)
+}
+
+pairs(wine[,2:12], 
+      upper.panel = panel.cor)
+```
+
+
+## Visualising Correlation Matrix: ggcormat()
+On of the advantage of using ggcorrmat() over many other methods to visualise a correlation matrix is it’s ability to provide a comprehensive and yet professional statistical report as shown in the figure below.
+
+```{r, fig.height=7, fig.width=7}
+ggstatsplot::ggcorrmat(
+  data = wine, 
+  cor.vars = 1:11,
+  ggcorrplot.args = list(outline.color = "black", 
+                         hc.order = TRUE,
+                         tl.cex = 10),
+  title    = "Correlogram for wine dataset",
+  subtitle = "Four pairs are no significant at p < 0.05"
+)
+ggplot.component = list(
+    theme(text=element_text(size=5),
+      axis.text.x = element_text(size = 8),
+      axis.text.y = element_text(size = 8)))
+```
+
+
+## Building multiple plots
+Since ggstasplot is an extension of ggplot2, it also supports faceting. However the feature is not available in ggcorrmat() but in the grouped_ggcorrmat() of ggstatsplot.
+
+```{r, fig.height=14, fig.width=14}
+grouped_ggcorrmat(
+  data = wine,
+  cor.vars = 1:11,
+  grouping.var = type,
+  type = "robust",
+  p.adjust.method = "holm",
+  plotgrid.args = list(ncol = 2),
+  ggcorrplot.args = list(outline.color = "black", 
+                         hc.order = TRUE,
+                         tl.cex = 10),
+  annotation.args = list(
+    tag_levels = "a",
+    title = "Correlogram for wine dataset",
+    subtitle = "The measures are: alcohol, sulphates, fixed acidity, citric acid, chlorides, residual sugar, density, free sulfur dioxide and volatile acidity",
+    caption = "Dataset: UCI Machine Learning Repository"
+  )
+)
+```
+
+
+## Visualising Correlation Matrix using corrplot Package
+In the code chunk below, cor() of R Stats is used to compute the correlation matrix of wine data frame.
+Next, corrplot() is used to plot the corrgram by using all the default setting as shown in the code chunk below.
+
+```{r, fig.height=7, fig.width=7}
+wine.cor <- cor(wine[, 2:12])
+corrplot(wine.cor)
+```
+
+
+## Working with visual geometrics
+```{r, fig.height=7, fig.width=7}
+corrplot(wine.cor, 
+         method = "ellipse") 
+```
+
+
+## Working with layout
+```{r, fig.height=7, fig.width=7}
+corrplot(wine.cor, 
+         method = "ellipse", 
+         type="lower",
+         diag = FALSE,
+         tl.col = "black")
+```
+
+
+## Working with mixed layout
+```{r, fig.height=7, fig.width=7}
+corrplot.mixed(wine.cor, 
+               lower = "ellipse", 
+               upper = "number",
+               tl.pos = "lt",
+               diag = "l",
+               tl.col = "black")
+```
+
+
+## Combining corrgram with the significant tes
+```{r, fig.height=7, fig.width=7}
+wine.sig = cor.mtest(wine.cor, conf.level= .95)
+corrplot(wine.cor,
+         method = "number",
+         type = "lower",
+         diag = FALSE,
+         tl.col = "black",
+         tl.srt = 45,
+         p.mat = wine.sig$p,
+         sig.level = .05)
+```
+
+
+## Reorder a corrgram
+```{r, fig.height=7, fig.width=7}
+corrplot.mixed(wine.cor, 
+               lower = "ellipse", 
+               upper = "number",
+               tl.pos = "lt",
+               diag = "l",
+               order="AOE",
+               tl.col = "black")
+```
+
+
+## Reordering a correlation matrix using hclust
+```{r, fig.height=7, fig.width=7}
+corrplot(wine.cor, 
+         method = "ellipse", 
+         tl.pos = "lt",
+         tl.col = "black",
+         order="hclust",
+         hclust.method = "ward.D",
+         addrect = 3)
+```
+
+
+
+
+
+
+
+
+
+

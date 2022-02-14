@@ -1,0 +1,136 @@
+---
+title: "In-class exercise 5.3"
+description: |
+  Parallel Coordinates Plot
+author:
+  - name: Fei Jiahui 
+    url: https://example.com/norajones
+    affiliation: SMU MITB
+    affiliation_url: https://example.com/spacelysprokets
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Installing and Launching R Packages
+The code chunks below are used to install and load the packages in R.
+
+```{r}
+packages = c('GGally', 'plotly', 'parcoords', 'parallelPlot', 'tidyverse')
+
+for (p in packages){
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p,character.only = T)
+}
+```
+
+
+## Importing World Happiness Data Set
+First, important the data into R by using the code below.
+
+```{r}
+wh <- read_csv("data/WHData-2018.csv")
+```
+
+
+## Working with ggparcoord() of GGally package
+The code chunk below is used to plot a basic parallel coordinates by using ggparcoord() of GGally package.
+
+```{r, fig.height=7, fig.width=7}
+ggparcoord(data = wh, 
+           columns = c(7:12))
+```
+
+
+Plotting a parallel coordinates with boxplot
+
+```{r, fig.height=7, fig.width=10}
+ggparcoord(data = wh, 
+           columns = c(7:12), 
+           groupColumn = 2,
+           scale = "uniminmax",
+           alphaLines = 0.2,
+           boxplot = TRUE, 
+           title = "Parallel Coord. Plot of World Happines Attributes")
+```
+
+
+Parallel coordinates with facet
+
+```{r, fig.height=7, fig.width=10}
+ggparcoord(data = wh, 
+           columns = c(7:12), 
+           groupColumn = 2,
+           scale = "uniminmax", 
+           boxplot = TRUE, 
+           title = "Parallel Coord. Plot of World Happines Attributes") +
+  facet_wrap(~ Region)
+```
+
+
+## Plotting Interactive Parallel Coordinates: parcoords methods
+The code below plot a parallel coordinates plot using the basic parcoords() syntax.
+
+```{r, fig.height=7, fig.width=10}
+parcoords(wh[,7:12])
+```
+
+
+Plotting an Interactive Parallel Coordinates Plot
+
+```{r, fig.height=7, fig.width=10}
+parcoords(
+ wh[,7:12],
+ rownames = FALSE,
+ alpha = 0.3,
+ alphaOnBrushed = 0.2,
+ reorderable = T,
+ brushMode = '1D-axes',
+ width = 700,
+ height = 400)
+```
+
+
+## Plotting Interactive Parallel Coordinates Plot: parallelPlot methods
+The code chunk below plot an interactive parallel coordinates plot by using parallelPlot().
+
+```{r, fig.height=7, fig.width=10}
+wh <- wh %>%
+  select("Happiness score", c(7:12))
+parallelPlot(wh)
+```
+
+
+Rotate axis label
+
+```{r, fig.height=7, fig.width=10}
+parallelPlot(wh,
+             rotateTitle = TRUE)
+```
+
+
+Changing the colour scheme
+
+```{r, fig.height=7, fig.width=10}
+parallelPlot(wh,
+             continuousCS = 'RdBu',
+             rotateTitle = TRUE)
+```
+
+
+Parallel coordinates plot with hitogram
+
+```{r, fig.height=7, fig.width=10}
+histoVisibility <- rep(TRUE, ncol(wh))
+parallelPlot(wh,
+             rotateTitle = TRUE,
+             histoVisibility = histoVisibility)
+```
+
+

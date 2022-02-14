@@ -1,0 +1,114 @@
+---
+title: "In-class Exercise 5.2"
+description: |
+  Heatmap
+author:
+  - name: Fei Jiahui
+    url: https://example.com/norajones
+    affiliation: SMU MITB
+    affiliation_url: https://example.com/spacelysprokets
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Installing and Launching R Packages
+use the code chunk below to install and launch seriation, heatmaply, dendextend and tidyverse in RStudio.
+
+```{r}
+packages = c('seriation', 'dendextend', 'heatmaply', 'tidyverse')
+
+for(p in packages){library
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p, character.only = T)
+}
+```
+
+
+## Importing and preparing the data set
+In the code chunk below, read_csv() of readr is used to import WHData-2018.csv into R and parsed it into tibble R data frame format.
+
+```{r}
+wh <- read_csv("data/WHData-2018.csv")
+```
+
+
+Next, we need to change the rows by country name instead of row number by using the code chunk below
+
+```{r}
+row.names(wh) <- wh$Country
+```
+
+The data was loaded into a data frame, but it has to be a data matrix to make your heatmap.
+
+The code chunk below will be used to transform wh data frame into a data matrix.
+
+```{r}
+wh1 <- dplyr::select(wh, c(3, 7:12))
+wh_matrix <- data.matrix(wh)
+```
+
+
+## heatmap() of R Stats
+In this sub-section, we will plot a heatmap by using heatmap() of Base Stats. The code chunk is given below.
+
+```{r, fig.height=7, fig.width=7}
+wh_heatmap <- heatmap(wh_matrix,
+                      Rowv=NA, Colv=NA)
+```
+
+
+By default, heatmap() plots a cluster heatmap. The arguments Rowv=NA and Colv=NA are used to switch off the option of plotting the row and column dendrograms.
+To plot a cluster heatmap, we just have to use the default as shown in the code chunk below.
+
+```{r, fig.height=7, fig.width=7}
+wh_heatmap <- heatmap(wh_matrix)
+```
+
+
+The order of both rows and columns is different compare to the native wh_matrix. This is because heatmap do a reordering using clusterisation: it calculates the distance between each pair of rows and columns and try to order them by similarity. Moreover, the corresponding dendrogram are provided beside the heatmap.
+Here, red cells denotes small values, and red small ones. This heatmap is not really informative. Indeed, the Happiness Score variable have relatively higher values, what makes that the other variables with small values all look the same. Thus, we need to normalize this matrix. This is done using the scale argument. It can be applied to rows or to columns following your needs.
+
+The code chunk below normalises the matrix column-wise.
+
+```{r, fig.height=7, fig.width=7}
+wh_heatmap <- heatmap(wh_matrix,
+                      scale="column",
+                      cexRow = 0.6, 
+                      cexCol = 0.8,
+                      margins = c(10, 4))
+```
+
+
+```{r, fig.height=10, fig.width=10}
+heatmaply(normalize(wh_matrix[, -c(1, 2, 4, 5)]),
+          Colv=NA,
+          seriate = "none",
+          colors = Blues,
+          k_row = 5,
+          margins = c(NA,200,60,NA),
+          fontsize_row = 4,
+          fontsize_col = 5,
+          main="World Happiness Score and Variables by Country, 2018 \nDataTransformation using Normalise Method",
+          xlab = "World Happiness Indicators",
+          ylab = "World Countries"
+          )
+```
+
+
+
+
+
+
+
+
+
+
+
+

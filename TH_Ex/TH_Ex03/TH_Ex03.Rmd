@@ -1,0 +1,154 @@
+---
+title: "Take-home Exercise 3"
+description: |
+  Putting Visual Analytics into Practical Use
+author:
+  - name: Fei Jiahui
+    url: https://www.linkedin.com/in/jiahui-fei-169841109/
+    affiliation: SMU MITB
+    affiliation_url: https://scis.smu.edu.sg/
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# The Task
+In this take-home exercise, I will apply appropriate data visualisation techniques learnt in Lesson 4 to create a data visualisation to segment kids-drinks-and-other by nutrition indicators. For the purpose of this task, *starbucks_drink.csv* will be used.
+
+
+## 1 Deciding what form of visualisation to be used
+Since there is no know correlation between various nutrition indicators, i.e. sugar level is not linked to dietary fiber level, it is not meaningful to create a correlation matrix. Furthermore, since our purpose is not to explore the relationships between different nutrition indicators, we will not use parallel coordinates plot either.
+
+Our goal is to visualise the relative level of different nutrition indicators in different types of drinks and hence, we will be using heatmaps to accomplish this task.
+
+
+## 2 Installing and launching required R packages
+We will use the code chunk below to install and launch **seriation**, **heatmaply**, **dendextend** and **tidyverse** in RStudio.
+
+```{r}
+packages = c('seriation', 'dendextend', 'heatmaply', 'tidyverse')
+
+for(p in packages){library
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p, character.only = T)
+}
+```
+
+
+## 3 Importing and preparing the data set
+In the code chunk below, read_csv() of readr is used to import starbucks_drink.csv into R and parsed it into tibble R data frame format.Starbucks is our main data frame with all the segments
+
+```{r}
+starbucks <- read_csv("data/starbucks_drink.csv")
+```
+
+
+Next, we will use filter function in dplyr package to filter out the kids-drinks-and-other category.
+
+```{r}
+kids <- starbucks %>%
+  filter(Category == "kids-drinks-and-other" )
+```
+
+
+Reading the data frame we have now, I realise that for different types of drinks, for example hot chocolate, there are non-quantitative fields such as portion size options, milk type and options for whipped cream.
+
+For meaningful analysis and comparison, I will compare the average value of each nutrition indication per fluid ounce (fl oz) instead of taking the total amount. Also, I realise each drink always has two options-- one with whipped cream and the other without whipped cream. As a result, I will not treat whipped cream as a separate field. Instead, I will take the average value of nutrition indicators with and without whipped cream for each drink.
+
+Now I will use the following code chunks to achieve what we have discussed above. First, we will use group_by to group the data by type of drink and milk type, then we use summarise function to find the nutrition level per floz by dividing sum of the respective nutrition indicator levels by sum of the portion size.
+
+```{r}
+kidsgroup <- kids %>%
+  group_by(`Name`, `Milk`) %>%
+  summarise('Calories' = sum(`Calories`)/sum(`Portion(fl oz)`),
+            'Calories from fat' = sum(`Calories from fat`)/sum(`Portion(fl oz)`),
+            'Total Fat(g)' = sum(`Total Fat(g)`)/sum(`Portion(fl oz)`),
+            'Saturated fat(g)' = sum(`Saturated fat(g)`)/sum(`Portion(fl oz)`),
+            'Trans fat(g)' = sum(`Trans fat(g)`)/sum(`Portion(fl oz)`),
+            'Cholesterol(mg)' = sum(`Cholesterol(mg)`)/sum(`Portion(fl oz)`),
+            'Sodium(mg)' = sum(`Sodium(mg)`)/sum(`Portion(fl oz)`),
+            'Total Carbohydrate(g)' = sum(`Total Carbohydrate(g)`)/sum(`Portion(fl oz)`),
+            'Dietary Fiber(g)' = sum(`Dietary Fiber(g)`)/sum(`Portion(fl oz)`),
+            'Sugars(g)' = sum(`Sugars(g)`)/sum(`Portion(fl oz)`),
+            'Protein(g)' = sum(`Protein(g)`)/sum(`Portion(fl oz)`)) %>%
+  ungroup()
+```
+
+
+Next, we will create a column named 'drinktype' by concatenating columns name and milk type, to achieve this, we will use the *paste* function. refer to the code chunk below:
+
+```{r}
+kidsgroup$drinktype = paste(kidsgroup$Name,'-',kidsgroup$Milk)
+```
+
+
+we need to change the rows by drinktype instead of row number by using the code chunk below.
+
+```{r}
+row.names(kidsgroup) <- kidsgroup$drinktype
+```
+
+
+The data was loaded into a data frame, but it has to be a data matrix to make the heatmap.
+The code chunk below will be used to transform kidsgroup data frame into a data matrix.
+
+```{r}
+kids_matrix <- data.matrix(kidsgroup)
+```
+
+
+## 4 Working with heatmaply
+We will first use plot the basic heatmap using the normalize method.
+
+```{r, fig.height=7, fig.width=10}
+heatmaply(normalize(kids_matrix[, -c(1, 2, 14)]),
+          Colv=NA,
+          seriate = "none",
+          colors = Blues
+          )
+```
+
+
+In order to determine the best clustering method and number of cluster the dend_expend() and find_k() functions of dendextend package will be used. First, the dend_expend() will be used to determine the recommended clustering method to be used.
+
+```{r}
+kid_d <- dist(normalize(kids_matrix[, -c(1, 2, 14)]), method = "euclidean")
+dend_expend(kid_d)[[3]]
+```
+
+
+The output table shows that “mcquitty” method should be used because it gave the high optimum value. Next, find_k() is used to determine the optimal number of cluster. Figure below shows that k=7 would be good.
+
+```{r}
+kid_clust <- hclust(kid_d, method = "mcquitty")
+num_k <- find_k(kid_clust)
+plot(num_k)
+```
+
+
+We will now improve our heat map by useing the hclust method and k value determined just now. We will also add in chart title and axis labels.
+
+```{r, fig.height=8, fig.width=12}
+heatmaply(normalize(kids_matrix[, -c(1, 2, 14)]),
+          Colv=NA,
+          seriate = "none",
+          colors = Blues,
+          dist_method = "euclidean",
+          hclust_method = "mcquitty",
+          k_row = 7,
+          margins = c(NA,60,60,NA),
+          fontsize_row = 7,
+          fontsize_col = 8,
+          main="Starbucks kid drinks average nutrition level by drink & milk type \nDataTransformation using Normalise Method",
+          xlab = "Nutrition Indicators",
+          ylab = "Drink and Milk Type",
+          )
+```
+
+
