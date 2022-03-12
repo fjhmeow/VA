@@ -1,7 +1,7 @@
 ---
 title: "DataViz Makeover 2"
 description: |
-  A new article created using the Distill format.
+  DataViz Makeover 2 for ISSS608: Visual Analytics and Applications.
 author:
   - name: Fei Jiahui 
     url: https://www.linkedin.com/in/jiahui-fei-169841109/
@@ -68,22 +68,45 @@ Please refer to the graph below for poposed visualisation. You can also find it 
 
 
 
+
 # 4 Step By Step Guide
 Step                     | Action
 ------------------------ | ---------------------------------------------------
+1. Open tableau, drag data source files *MP14_SUBZONE_WEB_PL.shp* and *origin_destination_bus__SZ_202201.csv* into the data source tab, and create a link between the two files. Define the relationship as follows: **Subzone N** in the shape file equals to the **Destination Sz** in the csv file | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\1.png)
+2. Open a new worksheet, name it as "origin". Convert the attribute **Time Per Hour** to Dimension | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\2.png)
+3. Drag time per hour to columns, day type and total trips to rows. Also drag time per hour and origin sz to filters | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\3.png)
+4. Click time per hour under filters, click edit filter, de-select 0 to 4 as we are only analyzing from 5am onwards | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\4.png)
+5. Click Origin Sz under filters, click show filter, select single value (list) | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\5.png)
+6. Right click weekday on the vertical axis, choose rotate label | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\6.png)
+7. Right click total trips, click format, change font size to 6. Similarly, right click on weekday, click format, change font size to 6. Right click Day type, click format, change font size to 6. Right click hour at the bottom horizontal axis, click format, change font size to 6. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\7.png)
+8. Right click total trips, click edit axis, remove axis title | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\8.png)
+9. Click colour, choose orange | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\9.png)
+10. Double click on title, change the tile to "Time distribution of bus trips FROM", click **insert**, choose origin SZ. Change origin SZ colour to orange and change from to bold, change font size to 8. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\10.png)
+11. Right click worksheet origin, choose duplicate, rename it as destination. Remove origin SZ from filters, drag destination SZ to filters. Similarly, click show filter then choose single value (list) | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\11.png)
+12. Click colour, choose green | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\12.png)
+13. Double click on title, change the tile to "Time distribution of bus trips TO", click **insert**, choose destination SZ. Change destination SZ colour to green and bold. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\13.png)
+14. Click to create new worksheet, rename it to map. Drag longitude to columns, latitude to rows. Drag origin Sz to filters. Drag sum(total trips) to colour. Drag geometry, destination SZ and Region N to Detail. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\14.png)
+15. Click original SZ under filters, click show filter, then change to single value(list). | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\15.png)
+16. Click SUM(total trips), quick table calculation, choose **percent of total**. click edit table calculation, choose **table(across)** | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\16.png)
+17. Click colour, click edit colors, change to stepped colour, change opacity to 90% | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\17.png)
+18. Double click chart title, change to "Destination distribution of all bus trips generated from" click insert, choose origin sz and bold. change font size to 8. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\18.png)
+19. Go back to sheet origin, go to the filter, choose apply to worksheets, selected worksheets, and tick map   | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\19.png)
+20. right click on legend and filter, change all font size to 6. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\20.png)
+21. Create a new dashboard and drag the worksheet to the positions show in the graph at the right. Save and publish to tableau public. | ![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\21.png)
 
 
 
 
+# 5 Observations and Insights
+
+### 5.1 
 
 
 
+### 5.2 
 
 
 
-
-
-
-
+### 5.3 
 
 
