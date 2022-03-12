@@ -1,0 +1,89 @@
+---
+title: "DataViz Makeover 2"
+description: |
+  A new article created using the Distill format.
+author:
+  - name: Fei Jiahui 
+    url: https://www.linkedin.com/in/jiahui-fei-169841109/
+    affiliation: SMU MITB
+    affiliation_url: https://scis.smu.edu.sg/master-it-business
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# 1 Critique of Original Visualisation
+
+The original visualisation is shown below:
+
+![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\original.png)
+
+### 1.1 Clarity
+1. Lack of clear chart title and dashboard title. The original visualisation does not have clear title for the component charts and for the entire dashboard. For example, the title for the charts on the top right corner is called "Weekday Adjacency Matrix", such a title does not really tell the user what exactly the chart is showing. Only after a careful study, one will then be able to tell the chart is showing the percentage of bus trips to and from particular sub-zones on weekdays. The chart title should be improved so that at one glance, the viewer can tell what the chart is trying to show. Furthermore, a title should be added for the entire dashboard to allow users to understand what analysis this entire dashboard is trying to make.
+
+2. Row labels and column labels are illegible. Due to the sheer number of sub-zones, the row labels and column labels for the adjacency matrix are difficult, if not impossible, to read. For example, the horizontal axis labels on Destination SZ are totally overlapping with each other, while the labels for origin SZ in the weekend adjacency matrix at the bottom right are missing. Due to such a problem, the clarity of the visualisation is undermined as users are not able to tell which origin sub-zone and which destination sub-zone are being analyzed.
+
+3. The adjacency matrix is arranging the rows and columns based on alphabetical order, however such an arrangement is not sensible geographically. For example, "Boon Lay Place" is placed next to "Boon Keng" while in fact these two zones are geographically far apart from each other. To analyse the adjacency factor which has a geographical meaning behind it, we should adopt geovisual analysis techniques such as placing the zones into the Singapore map and discover how the bus trips are geographically distributed between different sub-zones so as to enhance clarity of our analysis.
+
+
+### 1.2 Aesthetics
+1. Visual tools such as different colours can be used to distinguish trips generated from certain sub-zones with trips attracted to the various sub-zones. Currently, the same colour is used for bar charts denoting trips from and trips to a particular sub-zone, making it difficult to tell the differences. However, if we can use different colours to represent the origin and destination sub-zones respectively, it will be more visually appealing and making it easier to read for potential viewers.
+
+2. The figure size of the adjacency matrix is too small and views are difficult to hover and select the information they would like to analyze. Due to the very small fig sizes, aesthetics are significantly impaired as viewers can hardly tell the difference in the colours used, and it poses a significant challenge for users to hover and select the data point they want to analyse. For instance, if I would like to know how many per cent of bus trips from Aljunied are bound for Katong on weekdays, it is almost impossible to find and select the right information on this adjacency matrix. 
+
+3. The various worksheets are not properly aligned in the dashboard. It makes the dashboard look messy and less aesthetically appealing when the worksheets are misaligned. For example, the fig length of the weekday adjacency matrix is longer than weekend adjacency matrix and the bottom line of the weekday adjacency matrix is not aligned with the bottom of the weekday time distribution bar charts. Such misalignment will undermine visual aesthetics of the dashboard.
+
+
+# 2 Alternative Design
+
+The proposed alternative design is shown below:
+
+![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\propose.jpg)
+
+### 2.1 Clarity
+1. Clear chart title and dashboard title will be added to allow users to better undertand the purpose of the particular chart and visualization tool.For example, I will highlight in the chart titles whether it is a time distribution graph for bus trips from a certain origin subzone or it is a destination distribution for bus trips from a certain sub-zone.
+
+2. I will use geovisual analysis by incorporating all the sub-zones into the Singapore map to visually demonstrate how the bus trips are distributed between various sub-zones. Different from the original design, using a geovisual map will allow users to clearly see the geographical location of all the sub-zones, and have a better understanding of the distribution pattern.
+
+3. I will also use clear tool tips to indicate important information required by potential users to enhance clarity. For instance, for the geovisual analysis, I will use tool tip to show the destination sub-zone name when hover over the area, different colour steps will also be used to indication the concentration level of the destination distributions.
+
+
+### 2.2 Aesthetics
+1. Different colours will be used for time distribution graph of trips to and from a certain sub-zone respectively, so that users will be also to tell the difference at one simple glance. It will also be more visually appealing by using different colours to represent two different attributes.
+
+2. The dashboard will be properly aligned so as to enhance the visual aesthetics value.
+
+3. Chart titles will follow the colour scheme of the corresponding bar charts so as to allow users to pick up the important information more easily.
+
+
+# 3 Proposed Visualisation
+
+Please refer to the graph below for poposed visualisation. You can also find it on [Tableau Public](https://public.tableau.com/app/profile/fei.jiahui/viz/DataVizMakeover2_16471059148730/Dashboard1)
+
+![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\new.png)
+
+
+
+# 4 Step By Step Guide
+Step                     | Action
+------------------------ | ---------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
