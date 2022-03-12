@@ -99,14 +99,25 @@ Step                     | Action
 
 # 5 Observations and Insights
 
-### 5.1 
+### 5.1 Public bus services are mainly serving short-distance travel needs of commuters.
+From the geovisual analysis, we can tell the general destination distribution patterns for bus trips. It is noted that most bus services are serving routes within the same sub-zone or to adjacent sub-zones in the same area. For example, if we choose a random origin sub-zone such as tampines north as shown below, we will see that more than 75% of bus trips are serving destinations within tampines (be it tampines north, east or west.)
+
+![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\5.1.png)
+
+As such, we can infer that public bus travel mainly serve as a supplementary service for shorter-distance trips within the same sub-zone or to adjacent sub-zones. For long-distance travel across different regions, alternatives such as MRT could be the main choice for commuters.
 
 
+### 5.2 Singapore still has a long way to go to smoothen peak-period travel demand.
+It is identified in the Singapore Land Transport Master Plan 2040 that it is a key priority for the authority to encourage pre-peak travel and smoothen Singpore's peak period travel demand. However, from the illustration below, we can see that there is still a very sharp peak on weekdays around 7am in the morning and 6pm in the afternoon. 
 
-### 5.2 
+![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\5.2.png)
+
+Having a very sharp peak-period travel demand will place significant pressure on not only bus services but also the entire land transport system. For example, in the past decade, Singapore's MRT system was poorly maintained and struggled to cope with the high peak-period demand. One of the worst MRT breakdowns happened during the afternoon peak hours of 7 july 2015, and more than 250,000 commuters were affected. Despite government initiatives such as offering free travel incentives during pre-peak hours, Singapore still has a sharp peak-period travel demand and we still have a long way to go to smoothen the travel demand curve.
 
 
+### 5.3 A different CBD during weekends
+Singapore's CBD area is very busy during weekdays but it may see the sharpest drop in traffic and essentially turn into a semi ghost town during weekends. We can see from the chart below where a CBD zone - Cecil experiences a sharp drop in traffic during weekends. 
 
-### 5.3 
+![](C:\fjhmeow\VA\DataViz Makeover\DataViz Makeover 2\data\5.3.png)
 
-
+As identified in the Singapore Land Transport Master Plan 2040, the government is trying to bring jobs closer to people's home by initiating development projects such as Jurong Innovation District and Punggol Digital District. With such new districts being built, the CBD may no longer be overly crowded during weekdays and under-utilised during weekends. As Singapore tries to adopt a more balanced urban development strategy, I believe there will no longer be a single CBD but have multiple small CBDs across the island in the future.
