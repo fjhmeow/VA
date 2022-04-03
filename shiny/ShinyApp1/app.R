@@ -2,45 +2,36 @@ library(shiny)
 library(tidyverse)
 library(bslib)
 library(thematic)
+library(plotly)
 
 thematic::thematic_shiny()
 
-exam <- read.csv("data/Exam_data.csv")
+Accident2020 <- read.csv("data/dft-road-casualty-statistics-accident-2020.csv")
+Accident2019 <- read.csv("data/dft-road-casualty-statistics-accident-2019.csv")
 
 ui <- fluidPage(
-  theme = bs_theme(bg = "#0b3d91",
-                   fg = "white",
-                   primary = "#FCC780",
-                   base_font = font_google("Roboto"),
-                   code_font = font_google("Roboto")),
-  titlePanel("Pupils Examination Results Dashboard"),
+  titlePanel("London Accident Correlation Analysis"),
   sidebarLayout(
     sidebarPanel(
-      selectInput(inputId = "variable",
-                  label = "Subject:",
-                  choices = c("English" = "ENGLISH",
-                              "Maths" = "MATHS",
-                              "Science" = "SCIENCE"),
-                  selected = "ENGLISH"),
-      sliderInput(inputId = "bin",
-                  label = "Number of Bins",
-                  min = 5,
-                  max = 20,
-                  value = 10)
+      selectInput(inputId = "xvariable",
+                  label = "x Variable:",
+                  choices = c("Speed Limit" = "speed_limit",
+                              "Light Conditions" = "light_conditions",
+                              "Weather Conditions" = "weather_conditions"),
+                  selected = "light_conditions"),
     ),
     mainPanel(
-      plotOutput("distPlot")
+      plotOutput("barPlot")
     )
   )
 )
 
-server <- function(input, output){
-  output$distPlot <- renderPlot({
-    ggplot(exam,
-           aes_string(x = input$variable)) +
-      geom_histogram(bins = input$bin,
-                     color = "black",
-                     fill = "light blue")
+server <- function(input, output, session){
+  output$barPlot <- renderPlot({
+    ggplot(data=Accident2020,
+           aes_string(x = input$xvariable)) +
+      theme(axis.text.x = element_text(angle = 90))+
+      geom_bar()
   })
 }
 

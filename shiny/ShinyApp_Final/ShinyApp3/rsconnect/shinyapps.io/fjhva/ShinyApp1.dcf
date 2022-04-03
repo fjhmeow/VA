@@ -1,0 +1,13 @@
+name: ShinyApp1
+title: ShinyApp1
+username:
+account: fjhva
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5763810
+bundleId: 5758843
+url: https://fjhva.shinyapps.io/ShinyApp1/
+when: 1648968675.4698
+lastSyncTime: 1648968675.4698
+asMultiple: FALSE
+asStatic: FALSE

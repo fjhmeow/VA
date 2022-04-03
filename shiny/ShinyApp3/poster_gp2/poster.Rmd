@@ -1,0 +1,71 @@
+---
+title: Greater London Traffic Accident Analysis
+author:
+  - name: Fei Jiahui
+  - name: Zhang Yi
+  - name: Sean Prajs
+
+affiliation:
+  - num: 1
+    address: Master of IT in Business, Singapore Management University
+
+column_numbers: 3
+logoright_name: https&#58;//raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png
+logoleft_name: https&#58;//raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png
+output: 
+  posterdown::posterdown_html:
+    self_contained: false
+bibliography: packages.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Background
+
+Car accident occurs when a vehicle collides with another vehicle, pedestrian, animal, road debris, or other stationary obstruction, such as a tree, pole or building. These collisions often result in physical injury, disability or even death as well as property damage.
+
+According to World Health Organization (WHO), nearly 1.25 million people die in road crashes each year, on average 3,287 deaths a day. In addition, road traffic crashes rank as the 9th leading cause of death and account for 2.2% of all deaths globally. Hence, road safety has became a pressing concern for many countries as severe losses to both the society and the individuals involved are incurred when these tragedies happen. These losses arise from the cost of treatment as well as lost productivity for those killed or disabled by their injuries.
+
+In the UK, the number of road deaths plateaued from 2012 to 2019 at around 1,850 deaths a year, which is equivalent to an average of five per day. In fact, the UK government has a long-standing collection of national accident statistics coupled with in-depth accident data, known as the Road Accident In-Depth Study(RAIDS). These records have been very influential in policy-making and formulation of regulations.
+
+# Introduction and Motivation
+
+For this project, we would be using road accidents and safety statistics provided by the UK Department for Transport from 2017 to 2020 to gain a better understanding of the car accident issue in the Greater London area. The dataset consists of detailed road safety statistics about the circumstances of road accidents, including variables like the location of the accidents, road types as well as weather conditions etc. By utilizing various visualization analytics tools, we expect to shine light on the occurrences of road traffic accident (e.g. nature, causes, frequency) to develop insights and prevention mechanisms for traffic accidents and road safety in the UK.
+
+# Approch
+
+The traffic accident dataset will be hosted on a R shiny dashboard, and users will be able to perform 4 types of analysis on it.
+
++ Exploratory Data Analysis (EDA)
++ Geovisual Analysis
++ Regression Analysis
++ Time-series Analysis
+
+# Results
+## `Exploratory Data Analysis (EDA)`
+The exploratory data analysis allows users to discover the relationship between the chosen environment conditions and accident conditions.
+
+The chi-square test results will tell users whether there is a significant association between the chosen environment factor and the accident factor. For example, if we choose day of week as the environment condition and accident severity as accident severity, the chi-square test will return a p-value of 0.252, indicating no significant association between these two factor. Or in other words, there is no significant link between accident severity and on which day during the week does the accident occur. 
+
+However, if we choose day of week and number of casualties, the corresponding p-value of the chi-square test is <2.2E-16, indicating a significant association between these two factors. In other words, the day of the week does affect the number of casualties should an accident occur.
+
+From the below correlation plot on chi-square residuals, we can see there is an attraction or positive association between higher number of casualties (>=2) and weekends (Saturday and Sunday), while generally there is a repulsion or negative association between higher number of casualties and weekdays (Monday to Friday).
+
+![](data\EDA1.png)
+
+## `GeoVisual Analysis`
+
+
+## `Regression Analysis`
+
+
+## `Time-series Analysis`
+
+
+# Future Improvements
+
+In future, we can expand the scope of our study beyond the Greater London area to include the entire UK. With a larger dataset and expanded scope, the comprehensiveness of our study can be enhanced, and our analysis tools will be more effective in terms of both descriptive and predictive values.
+
+

@@ -1,0 +1,60 @@
+---
+title: "User Guide"
+description: |
+  Step-by-step guide on how to use the data visualisation functions designed.
+author:
+  - name: Fei Jiahui, Zhang Yi, Sean Prajs 
+
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# 1. Exploratory Data Analysis
+Use this tab to run uni-variate and bi-variate analysis on selected variables.
+
+## Input Variable Selection
+Users can choose from two sets of variables, namely the **Environment Conditions** and **Accident Conditions**.
+
+Environment conditions are those related to the external environment factors when an accident occurs. Examples include light conditions, weather conditions, road surface conditions etc.
+
+Accident conditions are conditions associated with the accident itself, examples of accident conditions include severity of accident, number of casualties and number of vehicles involved.
+
+![](C:\fjhmeow\VA\shiny\ShinyApp3\user guide\data\1.1.png)
+
+
+## Univariate Analysis on Accdident Count Distribution
+After the selection of input variables, the app will run univariate analysis and return the accident count distribution based on the input selected.
+
+The bar chart on the right will show distribution of accident based on the selected environment condition and the bar chart on the right will show the distribution based on selected accident condition.
+
+![](C:\fjhmeow\VA\shiny\ShinyApp3\user guide\data\1.2.png)
+
+
+## Bivariate Chi-Square Analysis on Environment and Accident Conditions
+Based on the above selected environment conditions (light conditions) and accident conditions (accident severity), the app will run chi-square test of independence on the two categorical variables. Test result below shows a small p-value and indicates a significant association between light conditions and accident severity.
+
+![](C:\fjhmeow\VA\shiny\ShinyApp3\user guide\data\1.3.png)
+
+
+After the results of the chi-square test, the app will also display a balloon plot to visualise the frequency table used to run the chi-square test based on selected environment and accident conditions. The balloon plot draws a graphical matrix where each cell contains a dot whose size reflects the relative magnitude of the corresponding frequency.
+
+![](C:\fjhmeow\VA\shiny\ShinyApp3\user guide\data\1.4.png)
+
+
+Next, the app will display a correlation plot on chi-square residuals based on selected environment and accident conditions. Positive residuals are in blue. Positive values in cells specify an attraction (positive association) between the corresponding environment and accident variables. Negative residuals are in red. This implies a repulsion (negative association) between the corresponding environment and accident variables.
+
+![](C:\fjhmeow\VA\shiny\ShinyApp3\user guide\data\1.5.png)
+
+
+Last but not least, the raw frequency table generated based on selected environment and accident conditions will be desplayed for reference purposes.
+
+![](C:\fjhmeow\VA\shiny\ShinyApp3\user guide\data\1.6.png)
+
+
+# 2. GeoVisual Analysis
+
+# 3. Regression Analysis

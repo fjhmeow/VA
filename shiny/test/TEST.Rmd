@@ -1,0 +1,51 @@
+---
+title: "Untitled"
+description: |
+  A new article created using the Distill format.
+author:
+  - name: Nora Jones 
+    url: https://example.com/norajones
+    affiliation: Spacely Sprockets
+    affiliation_url: https://example.com/spacelysprokets
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+packages = c('ggstatsplot', 'ggside', 
+             'tidyverse', 'ggdist','dplyr')
+for (p in packages){
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+}
+```
+
+```{r}
+A2020 <- read_csv("data/dft-road-casualty-statistics-accident-2020.csv")
+A2019 <- read_csv("data/dft-road-casualty-statistics-accident-2019.csv")
+AA2020 <- filter(A2020, local_authority_ons_district %in% c("E09000001", "E09000002","E09000003","E09000004",
+                                                            "E09000005","E09000006","E09000007","E09000008",
+                                                            "E09000009","E09000010","E09000011","E09000012",
+                                                            "E09000013","E09000014","E09000015","E09000016",
+                                                            "E09000017","E09000018","E09000019","E09000020",
+                                                            "E09000021","E09000022","E09000023","E09000024",
+                                                            "E09000025","E09000026","E09000027","E09000028",
+                                                            "E09000029","E09000030","E09000031","E09000032",
+                                                            "E09000033"))
+AA2019 <- filter(A2019, local_authority_ons_district %in% c("E09000001", "E09000002","E09000003","E09000004",
+                                                            "E09000005","E09000006","E09000007","E09000008",
+                                                            "E09000009","E09000010","E09000011","E09000012",
+                                                            "E09000013","E09000014","E09000015","E09000016",
+                                                            "E09000017","E09000018","E09000019","E09000020",
+                                                            "E09000021","E09000022","E09000023","E09000024",
+                                                            "E09000025","E09000026","E09000027","E09000028",
+                                                            "E09000029","E09000030","E09000031","E09000032",
+                                                            "E09000033"))
+accident <- rbind(AA2020, AA2019)
+```
